@@ -22,11 +22,11 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmp${LNMPA_
     SelectMalloc="1" \
     ApacheSelect="2" \
     ServerAdmin="mail@xqitw.cn" \
-    ./install.sh lnmpa
+    ./install.sh lnmpa \
+    && yes|./addons.sh install redis
+    && yes|./addons.sh install opcache
 
-# 删除安装包
-RUN rm -rf /lnmp${LNMPA_VERSION}.tar.gz && rm -rf /lnmp${LNMPA_VERSION}
-
+# 启动
 RUN echo "lnmp start success!" > /lnmp.log
 
 # 开放端口
