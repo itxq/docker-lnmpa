@@ -29,7 +29,7 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
     ./install.sh lnmpa
 
 # 创建目录
-RUN cd / && mkdir -m 777 itxq/mariadb
+RUN mkdir -m 777 /itxq/mariadb
 
 # 添加shell脚本
 COPY ./shell /itxq
