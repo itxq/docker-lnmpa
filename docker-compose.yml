@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+
+  lnmpa-server:
+    container_name: lnmpa
+    command: tail -f -n 1
+    restart: on-failure:3
+    image: ccr.ccs.tencentyun.com/itxq/lnmpa:latest
+    volumes:
+      - ./config/httpd-vhosts.conf:/usr/local/apache/conf/extra/httpd-vhosts.conf:ro
+      - ./config/php.ini:/usr/local/php/etc/php.ini:ro
+      - ./config/my.cnf:/etc/my.cnf:ro
+      - ./config/nginx.conf:/usr/local/nginx/conf/nginx.conf:ro
+      - ./data:/usr/local/mariadb/var:rw
+      - ./www:/home/wwwroot/www:rw
+    ports:
+      - "80:80"

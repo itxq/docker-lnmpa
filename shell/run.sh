@@ -8,4 +8,4 @@ echo "初始化完成\n"
 
 lnmp start
 
-tail -f -n 1 /itxq/run.log
+tail -f -n 1 /itxq/shell/run.log
