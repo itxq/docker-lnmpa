@@ -36,6 +36,12 @@ RUN lnmp stop && cp -a /usr/local/mariadb/var/* /itxq/mariadb/
 # 启动脚本
 RUN echo "Docker LNMPA Start Complete!" > /itxq/run.log \
     && echo "#!/bin/sh" > /itxq/run.sh \
+    && echo "if [ ! -d \"/usr/local/mariadb/var/mysql\" ];then" > /itxq/run.sh \
+    && echo "cp -a /itxq/mariadb/mysql* /usr/local/mariadb/var/mysql" > /itxq/run.sh \
+    && echo "echo \"数据库data目录初始化完成\"" > /itxq/run.sh \
+    && echo "else" > /itxq/run.sh \
+    && echo "echo \"数据库data目录已存在\"" > /itxq/run.sh \
+    && echo "fi" > /itxq/run.sh \
     && echo "lnmp start" >> /itxq/run.sh \
     && echo "tail -f -n 1 /itxq/run.log" >> /itxq/run.sh
 
