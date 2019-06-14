@@ -31,20 +31,11 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
 # 创建目录
 RUN cd / && mkdir -m 777 itxq/mariadb
 
+# 添加shell脚本
+COPY ./shell /itxq
+
 # 备份数据库文件
 RUN lnmp stop && cp -a /usr/local/mariadb/var/* /itxq/mariadb/
-
-# 启动脚本
-RUN echo "Docker LNMPA Start Complete!" >> /itxq/run.log \
-    && echo "#!/bin/sh" >> /itxq/run.sh \
-    && echo "if [ ! -d \"/usr/local/mariadb/var/mysql\" ];then" >> /itxq/run.sh \
-    && echo "cp -a /itxq/mariadb/mysql* /usr/local/mariadb/var/mysql" >> /itxq/run.sh \
-    && echo "echo \"数据库data目录初始化完成\"" >> /itxq/run.sh \
-    && echo "else" >> /itxq/run.sh \
-    && echo "echo \"数据库data目录已存在\"" >> /itxq/run.sh \
-    && echo "fi" >> /itxq/run.sh \
-    && echo "lnmp start" >> /itxq/run.sh \
-    && echo "tail -f -n 1 /itxq/run.log" >> /itxq/run.sh
 
 # 镜像信息
 LABEL org.label-schema.schema-version="1.0.0" \
