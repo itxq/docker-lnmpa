@@ -29,13 +29,24 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
     ./install.sh lnmpa
 
 # 创建目录
-RUN mkdir -m 777 /itxq/mariadb
+RUN cd / \
+    && mkdir -m 777 -p /itxq/mariadb \
+    && mkdir -m 777 -p /itxq/config \
+    && mkdir -m 777 -p /itxq/shell
 
 # 添加shell脚本
-COPY ./shell /itxq
+COPY ./shell /itxq/shell
 
-# 备份数据库文件
-RUN lnmp stop && cp -a /usr/local/mariadb/var/* /itxq/mariadb/
+# 备份数据库data文件及LNMPA相关配置文件
+RUN lnmp stop \
+    && cp -a /usr/local/mariadb/var/* /itxq/mariadb/ \
+    && cp -a /usr/local/nginx/conf/nginx.conf /itxq/config/ \
+    && cp -a /etc/my.cnf /itxq/config/ \
+    && cp -a /usr/local/php/etc/php.ini /itxq/config/ \
+    && cp -a /usr/local/apache/conf/extra/httpd-vhosts.conf /itxq/config/
+
+# 建立软连接
+RUN ln -sfv /itxq/shell/run.sh /usr/bin/run-lnmpa
 
 # 镜像信息
 LABEL org.label-schema.schema-version="1.0.0" \
@@ -48,4 +59,4 @@ LABEL org.label-schema.schema-version="1.0.0" \
 EXPOSE 3306 443 80 22 21 20
 
 # 启动命令
-CMD /bin/bash /itxq/run.sh
+CMD ["run-lnmpa"]
