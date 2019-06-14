@@ -16,6 +16,7 @@ RUN yum update -y && yum install -y wget && yum clean all
 # 安装LNMPA
 RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz \
     && tar zxf lnmpa.tar.gz \
+    && mv lnmp${LNMPA_VERSION} lnmpa \
     && cd lnmpa \
     && LNMP_Auto="y" \
     DBSelect="10" \
