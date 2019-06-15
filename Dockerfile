@@ -1,14 +1,20 @@
-# 基于Centos7镜像
-FROM centos:7
+# LNMPA 版本
+ARG LNMPA_VERSION=1.6
+
+# Centos镜像版本
+ARG CENTOS_VERSION=7
+
+# MySQL ROOT 密码
+ARG DB_ROOT_PASSWORD=1234567890
+
+# Swoole 版本
+ARG SWOOLE_VERSION=4.3.5
+
+# 基于Centos镜像
+FROM centos:${CENTOS_VERSION}
 
 # 镜像作者信息
 MAINTAINER IT小强xqitw.cn <mail@xqitw.cn>
-
-# LNMPA 版本
-ENV LNMPA_VERSION=1.6
-
-# MySQL ROOT 密码
-ENV DB_ROOT_PASSWORD=1234567890
 
 # 安装依赖
 RUN yum update -y && yum install -y wget && yum clean all
@@ -31,6 +37,14 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
 # 安装Redis、Opcache
 RUN cd /lnmpa && yes|./addons.sh install redis && yes|./addons.sh install opcache
 
+# 安装swoole扩展
+RUN wget https://codeload.github.com/swoole/swoole-src/tar.gz/v${SWOOLE_VERSION} -cO swoole-src-${SWOOLE_VERSION}.tar.gz \
+    && tar zxf swoole-src-${SWOOLE_VERSION}.tar.gz \
+    && cd /swoole-src-${SWOOLE_VERSION} && phpize \
+    && ./configure --with-php-config=/usr/local/php/bin/php-config \
+    && make && make install \
+    && echo "extension=swoole.so" >> /usr/local/php/conf.d/swoole.ini
+
 # 创建目录
 RUN cd / \
     && mkdir -m 777 -p /itxq/mariadb \
@@ -52,6 +66,12 @@ RUN lnmp stop \
 
 # 建立软连接
 RUN ln -sfv /itxq/shell/run.sh /usr/bin/run-lnmpa && chmod a+x /usr/bin/run-lnmpa
+
+# 清理相关安装包
+RUN rm -rf lnmpa.tar.gz \
+    rm -rf lnmpa \
+    rm -rf swoole-src-${SWOOLE_VERSION}.tar.gz \
+    rm -rf swoole-src-${SWOOLE_VERSION}
 
 # 镜像信息
 LABEL org.label-schema.schema-version="1.0.0" \
