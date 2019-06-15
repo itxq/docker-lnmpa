@@ -42,7 +42,7 @@ RUN cd / \
 COPY ./shell /itxq/shell
 
 # 备份数据库data文件及LNMPA相关配置文件
-RUN /usr/local/redis/bin/redis-cli shutdown && lnmp stop \
+RUN lnmp stop \
     && cp -a /usr/local/mariadb/var/* /itxq/mariadb/ \
     && cp -a /usr/local/nginx/conf/nginx.conf /itxq/config/ \
     && cp -a /etc/my.cnf /itxq/config/ \
