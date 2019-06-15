@@ -5,13 +5,13 @@ FROM centos:7
 MAINTAINER IT小强xqitw.cn <mail@xqitw.cn>
 
 # LNMPA 版本
-ARG LNMPA_VERSION=1.6
+ARG LNMPA_VERSION="1.6"
 
 # MySQL ROOT 密码
-ARG DB_ROOT_PASSWORD=1234567890
+ARG DB_ROOT_PASSWORD="1234567890"
 
 # Swoole 版本
-ARG SWOOLE_VERSION=4.3.5
+ARG SWOOLE_VERSION="4.3.5"
 
 # 安装依赖
 RUN yum update -y && yum install -y wget && yum clean all
