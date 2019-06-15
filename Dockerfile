@@ -28,6 +28,9 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
     ServerAdmin="mail@xqitw.cn" \
     ./install.sh lnmpa
 
+# 安装Redis、Opcache
+RUN cd /lnmpa && yes|./addons.sh install redis && yes|./addons.sh install opcache
+
 # 创建目录
 RUN cd / \
     && mkdir -m 777 -p /itxq/mariadb \
@@ -44,7 +47,8 @@ RUN lnmp stop \
     && cp -a /usr/local/nginx/conf/nginx.conf /itxq/config/ \
     && cp -a /etc/my.cnf /itxq/config/ \
     && cp -a /usr/local/php/etc/php.ini /itxq/config/ \
-    && cp -a /usr/local/apache/conf/extra/httpd-vhosts.conf /itxq/config/
+    && cp -a /usr/local/apache/conf/extra/httpd-vhosts.conf /itxq/config/ \
+    && cp -a /usr/local/redis/etc/redis.conf /itxq/config/
 
 # 建立软连接
 RUN ln -sfv /itxq/shell/run.sh /usr/bin/run-lnmpa && chmod a+x /usr/bin/run-lnmpa

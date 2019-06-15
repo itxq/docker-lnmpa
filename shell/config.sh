@@ -34,3 +34,12 @@ echo "Apache 配置文件已存在！"
 fi
 rm -rf /usr/local/apache/conf/extra/httpd-vhosts.conf
 ln -sfv /itxq/conf/httpd-vhosts.conf /usr/local/apache/conf/extra/httpd-vhosts.conf
+
+if [ ! -f "/itxq/conf/redis.conf" ];then
+cp -a -p /itxq/config/redis.conf /itxq/conf/redis.conf
+echo "Redis 配置文件初始化完成！"
+else
+echo "Redis 配置文件已存在！"
+fi
+rm -rf /usr/local/redis/etc/redis.conf
+ln -sfv /itxq/conf/redis.conf /usr/local/redis/etc/redis.conf
