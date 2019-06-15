@@ -32,6 +32,7 @@ RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz
 RUN cd / \
     && mkdir -m 777 -p /itxq/mariadb \
     && mkdir -m 777 -p /itxq/config \
+    && mkdir -m 777 -p /itxq/conf \
     && mkdir -m 777 -p /itxq/shell
 
 # 添加shell脚本
@@ -46,14 +47,14 @@ RUN lnmp stop \
     && cp -a /usr/local/apache/conf/extra/httpd-vhosts.conf /itxq/config/
 
 # 建立软连接
-RUN ln -sfv /itxq/shell/run.sh /usr/bin/run-lnmpa
+RUN ln -sfv /itxq/shell/run.sh /usr/bin/run-lnmpa && chmod a+x /usr/bin/run-lnmpa
 
 # 镜像信息
 LABEL org.label-schema.schema-version="1.0.0" \
     org.label-schema.name="Docker LNMPA" \
     org.label-schema.vendor="IT小强xqitw.cn" \
     org.label-schema.license="Apache Licence 2.0" \
-    org.label-schema.build-date="20190614"
+    org.label-schema.build-date="20190615"
 
 # 开放端口
 EXPOSE 3306 443 80 22 21 20

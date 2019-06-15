@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  lnmpa-server:
+    container_name: lnmpa
+    restart: on-failure:3
+    image: itxq/lnmpa:latest
+    volumes:
+      - ./conf:/itxq/conf:ro
+      - ./data:/usr/local/mariadb/var:rw
+      - ./www:/home/wwwroot/default:rw
+    ports:
+      - "80:80"
