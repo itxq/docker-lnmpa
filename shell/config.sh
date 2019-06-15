@@ -43,3 +43,4 @@ echo "Redis 配置文件已存在！"
 fi
 rm -rf /usr/local/redis/etc/redis.conf
 ln -sfv /itxq/conf/redis.conf /usr/local/redis/etc/redis.conf
+/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf
