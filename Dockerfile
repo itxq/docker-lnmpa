@@ -1,20 +1,17 @@
-# LNMPA 版本
-ENV LNMPA_VERSION=1.6
-
-# Centos镜像版本
-ENV CENTOS_VERSION=7
-
-# MySQL ROOT 密码
-ENV DB_ROOT_PASSWORD=1234567890
-
-# Swoole 版本
-ENV SWOOLE_VERSION=4.3.5
-
 # 基于Centos镜像
-FROM centos:${CENTOS_VERSION}
+FROM centos:7
 
 # 镜像作者信息
 MAINTAINER IT小强xqitw.cn <mail@xqitw.cn>
+
+# LNMPA 版本
+ARG LNMPA_VERSION=1.6
+
+# MySQL ROOT 密码
+ARG DB_ROOT_PASSWORD=1234567890
+
+# Swoole 版本
+ARG SWOOLE_VERSION=4.3.5
 
 # 安装依赖
 RUN yum update -y && yum install -y wget && yum clean all
