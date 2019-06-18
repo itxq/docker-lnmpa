@@ -75,7 +75,7 @@ LABEL org.label-schema.schema-version="1.0.0" \
     org.label-schema.name="Docker LNMPA" \
     org.label-schema.vendor="IT小强xqitw.cn" \
     org.label-schema.license="Apache Licence 2.0" \
-    org.label-schema.build-date="20190615"
+    org.label-schema.build-date="20190618"
 
 # 开放端口
 EXPOSE 3306 443 80 22 21 20

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ ! -f "/itxq/conf/nginx.conf" ];then
 cp -a -p /itxq/config/nginx.conf /itxq/conf/nginx.conf
 echo "Nginx 配置文件初始化完成！"
