@@ -14,7 +14,7 @@ ARG DB_ROOT_PASSWORD="1234567890"
 ARG SWOOLE_VERSION="4.3.5"
 
 # 安装依赖
-RUN yum update -y && yum install -y wget && yum clean all
+RUN yum update -y && yum install -y wget && yum install -y expect && yum clean all
 
 # 安装LNMPA
 RUN wget http://soft.vpser.net/lnmp/lnmp${LNMPA_VERSION}.tar.gz -cO lnmpa.tar.gz \
@@ -71,11 +71,11 @@ RUN rm -rf lnmpa.tar.gz \
     rm -rf swoole-src-${SWOOLE_VERSION}
 
 # 镜像信息
-LABEL org.label-schema.schema-version="1.0.0" \
+LABEL org.label-schema.schema-version="1.0.1" \
     org.label-schema.name="Docker LNMPA" \
     org.label-schema.vendor="IT小强xqitw.cn" \
     org.label-schema.license="Apache Licence 2.0" \
-    org.label-schema.build-date="20190618"
+    org.label-schema.build-date="20190619"
 
 # 开放端口
 EXPOSE 3306 443 80 22 21 20
